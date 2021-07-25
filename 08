@@ -219,19 +219,21 @@ default via 172.29.192.1 dev eth0 proto dhcp metric 100
 
 3. Проверьте открытые TCP порты в Ubuntu, какие протоколы и приложения используют эти порты? Приведите несколько примеров.
 
-Протокол HTTPS использует TCP-порты:
-[root@localhost etc]# ss -t -n
-State        Recv-Q    Send-Q                 Local Address:Port               Peer Address:Port   Process   
-ESTAB        0         0                     172.29.197.117:53924              5.255.255.70:443              
-ESTAB        0         0                     172.29.197.117:58780             140.82.112.26:443              
-CLOSE-WAIT   1         0                     172.29.197.117:33470                8.43.85.29:443              
-ESTAB        0         0                     172.29.197.117:43318              52.36.47.189:443              
-ESTAB        0         0                     172.29.197.117:55072             104.18.22.137:443              
-CLOSE-WAIT   10        0            [::ffff:172.29.197.117]:48028       [::ffff:18.200.1.4]:443              
+Протокол HTTPS использует TCP-порты. Приложения Firefox и java.
+<pre>ss -t -n -p
+State          Recv-Q     Send-Q                   Local Address:Port                  Peer Address:Port     Process                                                                                                      
+ESTAB          0          0                       172.29.197.117:38876                74.125.205.95:443       users:((&quot;firefox&quot;,pid=37666,fd=94))                                                                         
+ESTAB          0          0                       172.29.197.117:43256                 172.67.43.83:443       users:((&quot;firefox&quot;,pid=37666,fd=71))                                                                         
+ESTAB          0          0                       172.29.197.117:56562                104.18.22.137:443       users:((&quot;firefox&quot;,pid=37666,fd=108))                                                                        
+CLOSE-WAIT     1          0                       172.29.197.117:33470                   8.43.85.29:443       users:((&quot;gnome-shell&quot;,pid=2314,fd=21))                                                                      
+ESTAB          0          0                       172.29.197.117:60038                140.82.112.26:443       users:((&quot;firefox&quot;,pid=37666,fd=50))                                                                         
+ESTAB          0          0                       172.29.197.117:43318                 52.36.47.189:443       users:((&quot;firefox&quot;,pid=37666,fd=114))                                                                        
+CLOSE-WAIT     10         0              [::ffff:172.29.197.117]:48028          [::ffff:18.200.1.4]:443       users:((&quot;java&quot;,pid=3070,fd=114))                                 
 
 4.Проверьте используемые UDP сокеты в Ubuntu, какие протоколы и приложения используют эти порты?
 
-Протокол bootps использует UDP-порты:
-root@localhost etc]# ss -u 
+Протокол bootps использует UDP-порты.Приложение NetworkManage
+<pre>[root@localhost etc]# ss -u -p
 Recv-Q       Send-Q                   Local Address:Port               Peer Address:Port        Process      
-0            0                  172.29.197.117%eth0:bootpc             172.29.192.1:bootps 
+0            0                  172.29.197.117%eth0:bootpc             172.29.192.1:bootps       users:((&quot;NetworkManager&quot;,pid=1002,fd=26))
+</pre>
